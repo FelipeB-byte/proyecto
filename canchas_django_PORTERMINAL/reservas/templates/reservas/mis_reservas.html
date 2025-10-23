@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis reservas{% endblock %}
+
+{% block content %}
+<div class="rounded-2xl border border-slate-700 bg-slate-900 p-5 shadow-lg">
+    
+    <h1 class="text-xl font-semibold mb-3">Mis reservas</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <table class="w-full text-sm">
+            <thead>
+                <tr>
+                    <th class="text-left py-2">Fecha</th>
+                    <th class="text-left">Hora</th>
+                    <th class="text-left">Cancha</th>
+                    <th class="text-left">Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for r in items %}
+                    <tr class="border-t border-slate-700">
+                        <td class="py-2">{{ r.fecha }}</td>
+                        <td>{{ r.hora }}</td>
+                        <td>{{ r.cancha.nombre }}</td>
+                        <td>
+                            <span class="rounded-full bg-slate-900 border border-slate-600 px-2 py-1 text-xs">
+                                {{ r.estado }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if r.estado == 'confirmada' %}
+                                <button 
+                                    name="rid" 
+                                    value="{{ r.id }}" 
+                                    class="rounded-xl border border-slate-600 bg-slate-800 px-3 py-1 hover:bg-slate-700 text-xs"
+                                >
+                                    Cancelar
+                                </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="py-4 text-slate-400 text-center">
+                            No tienes reservas.
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+
+</div>
+{% endblock %}

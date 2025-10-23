@@ -1,0 +1,1 @@
+module.exports={content:["./reservas/templates/**/*.html","./templates/**/*.html"],theme:{extend:{}},plugins:[require("@tailwindcss/forms")]};

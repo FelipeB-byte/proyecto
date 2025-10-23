@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Nueva Reserva{% endblock %}
+
+{% block content %}
+<div class="rounded-2xl border border-slate-700 bg-slate-900 p-5 shadow-lg">
+    
+    <h1 class="text-xl font-semibold mb-4 text-white">Nueva Reserva</h1>
+
+    <form method="post" class="grid md:grid-cols-2 gap-4 text-white">
+        {% csrf_token %}
+        
+        <div class="md:col-span-2 space-y-3">
+            {{ form.non_field_errors }}
+            
+            {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block mb-1 text-sm text-slate-300">
+                        {{ field.label }}
+                    </label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <p class="text-red-400 text-xs mt-1">{{ field.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="md:col-span-2 mt-3">
+            <button 
+                class="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2 hover:bg-slate-700 text-white"
+            >
+                Confirmar
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+/* 🔧 Estilos generales para todos los inputs y selects */
+input, select, textarea {
+    background-color: #1e293b;   /* fondo oscuro */
+    color: #f1f5f9;              /* texto claro */
+    border: 1px solid #334155;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    appearance: none;
+}
+
+/* 🔧 Forzar color en inputs de fecha y hora */
+input[type="date"], input[type="time"] {
+    color-scheme: dark;          /* fuerza modo oscuro en navegadores compatibles */
+    background-color: #1e293b;
+    color: #f1f5f9;
+}
+
+/* 🔧 Iconos del selector de fecha/hora (Chrome) */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* cambia icono a claro */
+}
+
+/* 🔧 Efecto focus */
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #64748b;
+    background-color: #0f172a;
+}
+</style>
+{% endblock %}
+
